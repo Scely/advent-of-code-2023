@@ -2,22 +2,12 @@ package d02
 
 import (
 	"bufio"
-	"log"
 	"os"
 	"regexp"
 	"strconv"
 )
 
-func readInputFile() *os.File {
-	file, err := os.Open("d02/input.txt")
-	if err != nil {
-		log.Fatal(err)
-	}
-	return file
-}
-
-func PartOne() int {
-	file := readInputFile()
+func PartOne(file *os.File) int {
 	defer file.Close()
 
 	sum := 0
@@ -46,8 +36,7 @@ func PartOne() int {
 	return sum
 }
 
-func PartTwo() int {
-	file := readInputFile()
+func PartTwo(file *os.File) int {
 	defer file.Close()
 
 	sum := 0
@@ -70,7 +59,6 @@ func PartTwo() int {
 			}
 		}
 		sum += cubes["red"] * cubes["green"] * cubes["blue"]
-
 	}
 
 	return sum

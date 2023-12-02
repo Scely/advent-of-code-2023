@@ -9,14 +9,6 @@ import (
 	"strings"
 )
 
-func readInputFile() *os.File {
-	file, err := os.Open("d01/input.txt")
-	if err != nil {
-		log.Fatal(err)
-	}
-	return file
-}
-
 var digitnameToDigit = map[string]string{
 	"one":   "1",
 	"two":   "2",
@@ -29,8 +21,7 @@ var digitnameToDigit = map[string]string{
 	"nine":  "9",
 }
 
-func PartOne() int {
-	file := readInputFile()
+func PartOne(file *os.File) int {
 	defer file.Close()
 
 	scanner := bufio.NewScanner(file)
@@ -58,8 +49,7 @@ func PartOne() int {
 	return sum
 }
 
-func PartTwo() int {
-	file := readInputFile()
+func PartTwo(file *os.File) int {
 	defer file.Close()
 
 	scanner := bufio.NewScanner(file)

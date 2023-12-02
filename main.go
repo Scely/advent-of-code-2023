@@ -1,98 +1,11 @@
 package main
 
 import (
-	"bufio"
+	"advent-of-code-2023/d02"
 	"fmt"
-	"log"
-	"os"
-	"regexp"
-	"strconv"
-	"strings"
 )
 
 func main() {
-	readInput2()
-}
-
-func readInput() {
-	file, err := os.Open("01/input.txt")
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer file.Close()
-
-	scanner := bufio.NewScanner(file)
-	sum := 0
-	for scanner.Scan() {
-		re := regexp.MustCompile("[0-9]")
-		matches := re.FindAllString(scanner.Text(), -1)
-		extractedDigits := strings.Join(matches, "")
-
-		newS := extractedDigits
-		if len(extractedDigits) > 2 {
-			newS = string(extractedDigits[0]) + string(extractedDigits[len(extractedDigits)-1])
-		} else if len(extractedDigits) == 1 {
-			newS = strings.Repeat(extractedDigits, 2)
-		}
-
-		value, _ := strconv.Atoi(newS)
-		sum += value
-
-	}
-
-	if err := scanner.Err(); err != nil {
-		log.Fatal(err)
-	}
-	fmt.Print(sum)
-}
-
-func readInput2() {
-
-	digitnameToDigit := map[string]string{
-		"one":   "1",
-		"two":   "2",
-		"three": "3",
-		"four":  "4",
-		"five":  "5",
-		"six":   "6",
-		"seven": "7",
-		"eight": "8",
-		"nine":  "9",
-	}
-
-	file, err := os.Open("01/input.txt")
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer file.Close()
-
-	scanner := bufio.NewScanner(file)
-	sum := 0
-	for scanner.Scan() {
-		re := regexp.MustCompile(`(one|two|three|four|five|six|seven|eight|nine|\d).*(one|two|three|four|five|six|seven|eight|nine|\d)|\d`)
-		groups := re.FindStringSubmatch(scanner.Text())
-		var extractedDigits string
-		if groups[1] == "" {
-			extractedDigits = groups[0] + groups[0]
-		} else {
-			leftDigit := groups[1]
-			rightDigit := groups[len(groups)-1]
-			if len(groups[1]) > 1 {
-				leftDigit = digitnameToDigit[groups[1]]
-			}
-			if len(groups[len(groups)-1]) > 1 {
-				rightDigit = digitnameToDigit[groups[len(groups)-1]]
-			}
-
-			extractedDigits = leftDigit + rightDigit
-		}
-
-		value, _ := strconv.Atoi(extractedDigits)
-		sum += value
-	}
-
-	if err := scanner.Err(); err != nil {
-		log.Fatal(err)
-	}
-	fmt.Print(sum)
+	fmt.Println(d02.PartOne())
+	fmt.Println(d02.PartTwo())
 }

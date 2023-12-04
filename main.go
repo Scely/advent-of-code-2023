@@ -1,14 +1,14 @@
 package main
 
 import (
-	"advent-of-code-2023/d01"
+	"advent-of-code-2023/d04"
 	"fmt"
 	"log"
 	"os"
 )
 
 func readInputFile() *os.File {
-	file, err := os.Open("d01/input.txt")
+	file, err := os.Open("d04/input.txt")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -16,6 +16,6 @@ func readInputFile() *os.File {
 }
 
 func main() {
-	fmt.Println(d01.PartOne(readInputFile()))
-	fmt.Println(d01.PartTwo(readInputFile()))
+	fmt.Println(d04.PartOne(readInputFile()))
+	fmt.Println(d04.PartTwo(readInputFile()))
 }

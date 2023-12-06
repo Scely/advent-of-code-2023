@@ -2,6 +2,7 @@ package d06
 
 import (
 	"bufio"
+	"math"
 	"os"
 	"regexp"
 	"strconv"
@@ -20,6 +21,15 @@ func stringNumbertoIntArray(s string) []int {
 	return numsInt
 }
 
+func findRangeOfTwoRoots(distance int, time int) int {
+	d := float64(distance)
+	t := float64(time)
+	delta := t*t - 4*d
+	root1 := math.Floor((t*t - math.Sqrt(delta)) / 2)
+	root2 := math.Ceil((t*t + math.Sqrt(delta)) / 2)
+	return int(root2 - root1 - 1)
+}
+
 func PartOne(file *os.File) int {
 	reNumber := regexp.MustCompile(`\d+`)
 	scanner := bufio.NewScanner(file)
@@ -34,21 +44,7 @@ func PartOne(file *os.File) int {
 	for i := 0; i < len(rawTimes); i++ {
 		time, _ := strconv.Atoi(rawTimes[i][0])
 		distance, _ := strconv.Atoi(rawDistances[i][0])
-
-		root1, root2 := 0, 0
-		for x := 0; x < time/2; x++ {
-			if -x*x+time*x > distance {
-				root1 = x
-				break
-			}
-		}
-		for x := time; x > time/2; x-- {
-			if -x*x+time*x > distance {
-				root2 = x
-				break
-			}
-		}
-		values = append(values, root2-root1+1)
+		values = append(values, findRangeOfTwoRoots(distance, time))
 	}
 	mult := 1
 	for _, v := range values {
@@ -67,7 +63,6 @@ func PartTwo(file *os.File) int {
 	scanner.Scan()
 	rawDistances := reNumber.FindAllStringSubmatch(scanner.Text(), -1)
 
-	values := []int{}
 	var time, distance int
 
 	strTime := ""
@@ -82,23 +77,5 @@ func PartTwo(file *os.File) int {
 	}
 	distance, _ = strconv.Atoi(strings.ReplaceAll(strDistance, " ", ""))
 
-	root1, root2 := 0, 0
-	for x := 0; x < time/2; x++ {
-		if -x*x+time*x > distance {
-			root1 = x
-			break
-		}
-	}
-	for x := time; x > time/2; x-- {
-		if -x*x+time*x > distance {
-			root2 = x
-			break
-		}
-	}
-	values = append(values, root2-root1+1)
-	mult := 1
-	for _, v := range values {
-		mult *= v
-	}
-	return mult
+	return findRangeOfTwoRoots(distance, time)
 }
